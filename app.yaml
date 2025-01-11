@@ -1,0 +1,53 @@
+name: oktodefibotapp
+region: sfo
+services:
+  - name: web
+    image:
+      registry_type: DOCR
+      repository: oktodefibotapp
+      tag: latest
+    http_port: 3000
+    instance_size_slug: professional-xs
+    instance_count: 1
+    routes:
+      - path: /
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: "3000"
+      - key: REDIS_URL
+        scope: RUN_TIME
+        value: ${REDIS_URL}
+      - key: DISCORD_CLIENT_ID
+        scope: RUN_TIME
+        value: ${DISCORD_CLIENT_ID}
+      - key: DISCORD_TOKEN
+        scope: RUN_TIME
+        value: ${DISCORD_TOKEN}
+      - key: DISCORD_CLIENT_SECRET
+        scope: RUN_TIME
+        value: ${DISCORD_CLIENT_SECRET}
+      - key: OKTO_API_KEY
+        scope: RUN_TIME
+        value: ${OKTO_API_KEY}
+      - key: OKTO_API_URL
+        value: "https://api.okto.tech/v1"
+      - key: BASE_URL
+        value: "https://oktodefibotapp.ondigitalocean.app"
+      - key: LIFI_API_KEY
+        scope: RUN_TIME
+        value: ${LIFI_API_KEY}
+      - key: GOOGLE_CLIENT_ID
+        scope: RUN_TIME
+        value: ${GOOGLE_CLIENT_ID}
+      - key: GOOGLE_CLIENT_SECRET
+        scope: RUN_TIME
+        value: ${GOOGLE_CLIENT_SECRET}
+    health_check:
+      http_path: /
+      initial_delay_seconds: 120
+      period_seconds: 30
+      timeout_seconds: 15
+      success_threshold: 1
+      failure_threshold: 5
